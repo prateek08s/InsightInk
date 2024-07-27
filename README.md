@@ -72,11 +72,6 @@ Follow these steps to set up InsightInk locally:
    streamlit run app.py
    ```
 
-## Usage
-
-1. **Upload PDF Files**: Use the file uploader in the sidebar to select and upload your PDF documents.
-2. **Ask Questions**: Type your questions in the input box and press Enter to receive answers based on the content of the PDFs.
-
 ## Troubleshooting
 
 ### StreamlitAPIException
@@ -113,6 +108,28 @@ st.set_option('allow_dangerous_deserialization', True)
 
 Ensure that this option is only used with trusted sources to avoid security risks.
 
+### AxiosError 403
+
+If you encounter an AxiosError with status code 403:
+
+```
+AxiosError: Request failed with status code 403
+```
+
+This typically indicates a permissions issue or a problem with accessing the API. Here's how to address it:
+
+1. **Verify API Key**: Ensure that your Google API key is correct and has the necessary permissions. Check the [Google API Console](https://console.cloud.google.com/) for your API key settings.
+
+2. **Streamlit Configuration**: If deploying on Replit or similar platforms, create a `.streamlit` folder in your project directory and add a `config.toml` file with the following content:
+
+   ```toml
+   [server]
+   enableXsrfProtection = false
+   enableCORS = false
+   ```
+
+3. **Check API Quotas**: Ensure you have not exceeded your API quotas or limits set by Google.
+
 ## Contributing
 
 Contributions are welcome! To contribute:
@@ -130,7 +147,5 @@ Contributions are welcome! To contribute:
 - **Streamlit**: For building the interactive web application framework.
 - **LangChain**: For the language models and tools used in this project.
 - **Google Generative AI**: For the AI models used in text generation and embeddings.
-
-
 
 
