@@ -11,7 +11,6 @@ import google.generativeai as genai
 
 # Load environment variables
 load_dotenv()
-
 api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
     raise ValueError("API key is missing or not set.")
@@ -41,8 +40,15 @@ def get_vector_store(text_chunks):
     Create a FAISS vector store from the text chunks and save it locally.
     """
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-    vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
-    vector_store.save_local("faiss_index")
+    
+    # Debugging FAISS import
+    try:
+        vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
+        vector_store.save_local("faiss_index")
+    except ImportError as e:
+        st.error(f"ImportError: {str(e)}")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {str(e)}")
 
 def get_conversational_chain():
     """
@@ -69,15 +75,21 @@ def user_input(user_question):
     """
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
     
-    # Enable dangerous deserialization if you're sure about the file's safety
-    new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
-    docs = new_db.similarity_search(user_question)
+    try:
+        new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+        docs = new_db.similarity_search(user_question)
 
-    chain = get_conversational_chain()
-    response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
+        chain = get_conversational_chain()
+        response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
 
-    # Display response using Streamlit
-    st.write("Reply: ", response["output_text"])
+        # Display response using Streamlit
+        st.write("Reply: ", response["output_text"])
+    except ImportError as e:
+        st.error(f"ImportError: {str(e)}")
+    except FileNotFoundError as e:
+        st.error(f"FileNotFoundError: {str(e)}")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {str(e)}")
 
 def main():
     """
