@@ -2,8 +2,6 @@
 
 InsightInk is an advanced PDF chat application that enables users to interact with their PDF documents using a conversational AI interface. It leverages modern AI models to provide accurate and detailed responses based on the content of uploaded PDFs.
 
-![InsightInk](https://your-image-url-here.com/image.png)  <!-- Replace with an actual image URL if available -->
-
 ## Features
 
 - **Upload and Process PDFs**: Easily upload multiple PDF files for processing.
