@@ -1,0 +1,13 @@
+prefix=D:/PROPER PROJECTS/AI PDF APP/venv/Library
+exec_prefix=D:/PROPER PROJECTS/AI PDF APP/venv/Library
+libdir=D:/PROPER PROJECTS/AI PDF APP/venv/Library/lib
+sharedlibdir=D:/PROPER PROJECTS/AI PDF APP/venv/Library/lib
+includedir=D:/PROPER PROJECTS/AI PDF APP/venv/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
